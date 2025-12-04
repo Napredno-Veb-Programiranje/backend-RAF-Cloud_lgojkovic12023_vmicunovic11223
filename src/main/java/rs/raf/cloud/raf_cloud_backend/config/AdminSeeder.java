@@ -20,7 +20,7 @@ public class AdminSeeder implements CommandLineRunner {
     public void run(String... args) {
 
         if (userRepository.findByEmail("admin@cloud.com").isPresent()) {
-            return; // admin već postoji
+            return;
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -29,8 +29,8 @@ public class AdminSeeder implements CommandLineRunner {
                 .firstName("Admin")
                 .lastName("User")
                 .email("admin@cloud.com")
-                .passwordHash(encoder.encode("admin")) // lozinka: admin
-                .permissions(Set.of(Permission.values())) // sve permisije
+                .passwordHash(encoder.encode("admin"))
+                .permissions(Set.of(Permission.values()))
                 .active(true)
                 .build();
 
