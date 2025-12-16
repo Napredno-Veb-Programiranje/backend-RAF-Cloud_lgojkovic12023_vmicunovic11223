@@ -41,7 +41,7 @@ public class AdminSeeder implements CommandLineRunner {
                     .lastName("Basic")
                     .email("user@cloud.com")
                     .passwordHash(encoder.encode("user"))
-                    .permissions(Set.of(Permission.USER_READ))
+                    .permissions(Set.of(Permission.USER_READ,Permission.MACHINE_SEARCH))
                     .active(true)
                     .build();
 
