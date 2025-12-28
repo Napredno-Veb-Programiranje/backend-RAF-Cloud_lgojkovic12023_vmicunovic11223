@@ -1,13 +1,17 @@
 package rs.raf.cloud.raf_cloud_backend.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.raf.cloud.raf_cloud_backend.dto.MachineDto;
 import rs.raf.cloud.raf_cloud_backend.dto.MachineEventDto;
+import rs.raf.cloud.raf_cloud_backend.dto.MachineSearchDto;
+import rs.raf.cloud.raf_cloud_backend.model.MachineOperationType;
 import rs.raf.cloud.raf_cloud_backend.model.Permission;
 import rs.raf.cloud.raf_cloud_backend.security.aop.RequiresPermission;
 import rs.raf.cloud.raf_cloud_backend.service.MachineService;
 
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -25,10 +29,10 @@ public class MachineController {
     }
 
     //search by name: /machines/search?q=abc
-    @GetMapping("/search")
+    @PostMapping("/search")
     @RequiresPermission({Permission.MACHINE_SEARCH})
-    public List<MachineDto> search(@RequestParam(required = false) String q) {
-        return machineService.searchByName(q);
+    public List<MachineDto> search(@RequestBody MachineSearchDto dto) {
+        return machineService.search(dto);
     }
 
     //create: ---/machines?name=m1--
@@ -36,6 +40,12 @@ public class MachineController {
     @RequiresPermission({Permission.MACHINE_CREATE})
     public MachineDto create(@RequestParam String name) {
         return machineService.create(name);
+    }
+
+    @PostMapping("/{id}/schedule")
+    public ResponseEntity<Void> schedule(@PathVariable Long id, @RequestParam MachineOperationType operation, @RequestParam Instant when) {
+        machineService.scheduleOperation(id, operation, when);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{id}/start")

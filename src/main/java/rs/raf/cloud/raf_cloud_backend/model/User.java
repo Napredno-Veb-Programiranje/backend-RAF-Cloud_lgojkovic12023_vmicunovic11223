@@ -16,6 +16,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userid")
     private Long userID;
 
     private String firstName;
@@ -31,5 +32,5 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Permission> permissions;
 
-    private boolean active = true;
+    private boolean isAdmin = true;
 }

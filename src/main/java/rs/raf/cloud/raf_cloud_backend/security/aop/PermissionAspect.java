@@ -41,17 +41,11 @@ public class PermissionAspect {
                 + ", required=" + Arrays.toString(required));
         System.out.println("check: user=" + cu.getEmail() + ", required=" + Arrays.toString(required));
 
-        if (cu == null) {
-            throw new ForbiddenException("Not authenticated");
-        }
-
         Set<Permission> userPerms = cu.getPermissions();
         boolean allowed = Arrays.stream(required).anyMatch(userPerms::contains);
 
         if (!allowed) {
             throw new ForbiddenException("Missing permission: " + Arrays.toString(required));
         }
-
-
     }
 }

@@ -37,6 +37,16 @@ public class JwtFilter implements Filter {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
 
+        httpRes.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        httpRes.setHeader("Vary", "Origin");
+        httpRes.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+        httpRes.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+        httpRes.setHeader("Access-Control-Allow-Credentials", "true");
+
+        if ("OPTIONS".equalsIgnoreCase(httpReq.getMethod())) {
+            httpRes.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
         String path = httpReq.getRequestURI();
 
         // Dozvoljavam login bez tokena
