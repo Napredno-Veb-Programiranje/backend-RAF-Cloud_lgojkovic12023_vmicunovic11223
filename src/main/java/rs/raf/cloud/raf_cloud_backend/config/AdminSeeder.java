@@ -28,7 +28,7 @@ public class AdminSeeder implements CommandLineRunner {
                     .email("admin@cloud.com")
                     .passwordHash(encoder.encode("admin"))
                     .permissions(Set.of(Permission.values()))
-                    .active(true)
+                    .isAdmin(true)
                     .build();
 
             userRepository.save(admin);
@@ -42,14 +42,11 @@ public class AdminSeeder implements CommandLineRunner {
                     .email("user@cloud.com")
                     .passwordHash(encoder.encode("user"))
                     .permissions(Set.of(Permission.USER_READ,Permission.MACHINE_SEARCH))
-                    .active(true)
+                    .isAdmin(false)
                     .build();
 
             userRepository.save(user);
             System.out.println(">>> BASIC USER CREATED (user@cloud.com / user)");
         }
     }
-
-
-
 }

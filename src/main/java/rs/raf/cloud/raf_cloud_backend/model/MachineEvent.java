@@ -20,7 +20,7 @@ public class MachineEvent {
     @ManyToOne
     private Machine machine;
 
-    private String action;   //START,STOP, RESTART,ERROR
+    private String action;
 
     private String message;
 
